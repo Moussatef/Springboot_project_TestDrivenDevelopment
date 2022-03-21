@@ -35,8 +35,8 @@ public class Client implements Serializable {
     @Enumerated
     private Gander gander;
 
-    @Column(columnDefinition = "true")
-    private boolean isActive;
+    @Column()
+    private boolean isActive = true;
 
 
     private Integer old;

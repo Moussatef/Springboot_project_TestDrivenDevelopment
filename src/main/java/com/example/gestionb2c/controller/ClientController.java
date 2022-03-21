@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequestMapping(path = "api/clients")
@@ -18,12 +19,22 @@ import java.util.List;
 public class ClientController {
     private final ClientService clientService;
     @PostMapping(path = "/save")
-    private ResponseEntity<List<Client>> addNewClient(@RequestBody List<Client> client){
-        if (client != null) {
-            List<Client> newClient = clientService.saveClients(client);
-            return ResponseEntity.ok().body(newClient);
+    public ResponseEntity<List<Client>> addNewClient(@RequestBody List<Client> client){
+        try {
+            if (!client.isEmpty()) {
+
+                List<Client> newClients = clientService.saveClients(client);
+
+                if(newClients == null){
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+                }
+                return ResponseEntity.ok().body(newClients);
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("Test","Test").build();
+        }catch (IllegalStateException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("Exception",e.getMessage().toUpperCase(Locale.ROOT)).build();
         }
-        return ResponseEntity.status(HttpStatus.valueOf(505)).body(null);
+
     }
 
 
