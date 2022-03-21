@@ -1,5 +1,6 @@
 package com.example.gestionb2c.entity;
 
+import com.example.gestionb2c.enums.Gander;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,7 +32,8 @@ public class Client implements Serializable {
     private String fullName;
 
     @Column()
-    private String gander;
+    @Enumerated
+    private Gander gander;
 
     @Column(columnDefinition = "true")
     private boolean isActive;

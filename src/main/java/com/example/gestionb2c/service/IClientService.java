@@ -8,7 +8,7 @@ import java.util.List;
 public interface IClientService {
     Client getClient(Long id);
     List<Client> getListClients();
-    Client saveClient(Client client);
+    List<Client> saveClients(List<Client> client);
     Client getClientByEmail(String email);
     List<Client> getListClientByGander(Gander gander);
     void deleteClient(Long id);

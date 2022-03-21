@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface ClientRepository extends JpaRepository<Client,Long> {
 
-    Client findByEmail(String email);
-    List<Client> findByGander(String gander);
+    Client findByEmailAndActiveIsTrue(String email);
+    List<Client> findByGander(Gander gander);
 }
