@@ -3,14 +3,13 @@ package com.example.gestionb2c.service;
 import com.example.gestionb2c.entity.Client;
 import com.example.gestionb2c.enums.Gander;
 import com.example.gestionb2c.repository.ClientRepository;
-import lombok.extern.java.Log;
-import lombok.extern.log4j.Log4j;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,7 +21,7 @@ public class ClientService implements IClientService{
     private Logger log ;
     private final ClientRepository clientRepository;
 
-    @Autowired
+
     public ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
@@ -97,15 +96,17 @@ public class ClientService implements IClientService{
 
     @Override
     public Client updateClient(Client client) {
-        Client clientUpdating = clientRepository.findById(client.getId()).orElse(null);
-        if(clientUpdating != null){
+        Client clientUpdating = Optional.ofNullable(clientRepository.findById(client.getId()).get()).orElseThrow(()-> new IllegalStateException("not found!!"));
+        if(clientUpdating!=null) {
             clientUpdating.setFullName(client.getFullName());
             clientUpdating.setEmail((client.getEmail()));
             clientUpdating.setGander(client.getGander());
             clientUpdating.setOld(client.getOld());
             clientUpdating.setPhone(client.getPhone());
-            return clientRepository.save(clientUpdating);
+
+        return clientRepository.save(clientUpdating);
+        }else {
+            return null;
         }
-        return null;
     }
 }
