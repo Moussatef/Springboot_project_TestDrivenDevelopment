@@ -1,6 +1,7 @@
 package com.example.gestionb2c.controller;
 
 import com.example.gestionb2c.entity.Client;
+import com.example.gestionb2c.enums.Gander;
 import com.example.gestionb2c.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -39,13 +40,31 @@ public class ClientController {
         return !clientService.getListClients().isEmpty() ? ResponseEntity.ok().body(clientService.getListClients()) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @PatchMapping (path = "/update/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable("id") Long id, @RequestBody Client client){
+    @PutMapping (path = "/update")
+    public ResponseEntity<Client> updateClient( @RequestBody Client client){
         Optional.ofNullable(client).orElseThrow(() -> new IllegalStateException("Client is null"));
         Client updatedClient = Optional.ofNullable( clientService.updateClient(client)).orElseThrow(() ->
             new IllegalStateException("Update Client filed!! ")
         );
         return ResponseEntity.ok().header("Updated","Client updated successfully").body(updatedClient);
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Client> getClient(@PathVariable("id") Long id){
+        Client client = Optional.ofNullable(clientService.getClient(id)).orElseThrow( () -> new IllegalStateException("Client :"+id+" not found") );
+        return ResponseEntity.ok().body(client);
+    }
+
+    @GetMapping(path = "/email/{email}")
+    public ResponseEntity<Client> getClientByEmail(@PathVariable("email") String email){
+        Client client = Optional.ofNullable(clientService.getClientByEmail(email)).orElseThrow( () -> new IllegalStateException("Client :"+email+" not found") );
+        return ResponseEntity.ok().body(client);
+    }
+
+    @GetMapping(path = "/gander/{gander}")
+    public ResponseEntity<List<Client>> getClientByGander(@PathVariable("gander") Gander gander){
+        List<Client> client = Optional.ofNullable(clientService.getListClientByGander(gander)).orElseThrow( () -> new IllegalStateException("Client :"+gander+" not found") );
+        return ResponseEntity.ok().body(client);
     }
 
 

@@ -13,5 +13,6 @@ public interface ClientRepository extends JpaRepository<Client,Long> {
 
     @Query(value = "SELECT * FROM Client WHERE Client.is_active = 'true' AND Client.email =?1", nativeQuery = true)
     Client getClientByEmailAndIsActive(String email);
-    List<Client> findByGander(Gander gander);
+    @Query(value = "SELECT * FROM Client WHERE Client.is_active = 'true' AND Client.gander =?1", nativeQuery = true)
+    List<Client> findByGanderAndIsActive(Gander gander);
 }

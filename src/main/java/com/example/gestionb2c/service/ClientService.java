@@ -80,7 +80,7 @@ public class ClientService implements IClientService{
 
     @Override
     public List<Client> getListClientByGander(Gander gander) {
-        return !gander.toString().isEmpty() ? clientRepository.findByGander(gander) : null ;
+        return !gander.toString().isEmpty() ? clientRepository.findByGanderAndIsActive(gander) : null ;
     }
 
     @Override
