@@ -62,8 +62,9 @@ public class ClientController {
     }
 
     @GetMapping(path = "/gander/{gander}")
-    public ResponseEntity<List<Client>> getClientByGander(@PathVariable("gander") Gander gander){
-        List<Client> client = Optional.ofNullable(clientService.getListClientByGander(gander)).orElseThrow( () -> new IllegalStateException("Client :"+gander+" not found") );
+    public ResponseEntity<List<Client>> getClientByGander(@PathVariable("gander") String gander){
+
+        List<Client> client = Optional.ofNullable(clientService.getListClientByGander(Gander.valueOf(gander))).orElseThrow( () -> new IllegalStateException("Client :"+gander+" not found") );
         return ResponseEntity.ok().body(client);
     }
 

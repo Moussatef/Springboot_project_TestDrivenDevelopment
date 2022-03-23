@@ -80,14 +80,14 @@ public class ClientService implements IClientService{
 
     @Override
     public List<Client> getListClientByGander(Gander gander) {
-        return !gander.toString().isEmpty() ? clientRepository.findByGanderAndIsActive(gander) : null ;
+        return !gander.toString().isEmpty() ? clientRepository.findClientsByIsActiveAndGander(true,gander) : null ;
     }
 
     @Override
     public void deleteClient(Long id) {
         if(clientRepository.findById(id).isPresent()){
             Client client = clientRepository.findById(id).get();
-            client.setActive(false);
+            client.setIsActive(false);
             clientRepository.save(client);
         }else{
             throw new IllegalStateException("User ID : "+id+" is not exists");

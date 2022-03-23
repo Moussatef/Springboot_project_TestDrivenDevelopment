@@ -26,7 +26,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
 @WebMvcTest(ClientController.class)
@@ -44,20 +43,18 @@ class ClientControllerTest {
     @BeforeEach
     void initClient(){
          clientOne = new Client(1L, "othman.moussatef@gmail.com","0637274172","Moussatef Othman", Gander.MALE,true,23);
-         clientTwo = new Client(2L, "khadija@gmail.com","0735261781","Khadija yc",Gander.FEMALE,true,18);
+         clientTwo = new Client(2L, "khadija@gmail.com","0735261781","Khadija hd",Gander.FEMALE,true,18);
     }
 
     @Test
     void addNewClient() throws Exception {
         List<Client> clientList = List.of(clientOne,clientTwo);
         when(clientService.saveClients(clientList)).thenReturn(clientList);
-
         mockMvc.perform(post("/api/clients/save")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(clientList)))
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
-
     }
 
     @Test
