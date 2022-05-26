@@ -5,11 +5,13 @@ import com.example.gestionb2c.enums.Gander;
 import com.example.gestionb2c.repository.ClientRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -20,8 +22,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
+@RunWith(MockitoJUnitRunner.class)
 class ClientServiceTest {
 
     @Mock
@@ -36,6 +38,7 @@ class ClientServiceTest {
 
     @BeforeEach
     void setUp() {
+
         clientOne = new Client(1L, "othman.moussatef@gmail.com","0637274172","Moussatef Othman", Gander.MALE,true,23);
         clientTwo = new Client(2L, "khadija@gmail.com","0735261781","Khadija hd",Gander.MALE,true,18);
         clientList.add(clientOne);
@@ -81,6 +84,8 @@ class ClientServiceTest {
 
     @Test
     void deleteClient() {
+
+
     }
 
     @Test
